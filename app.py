@@ -25,12 +25,14 @@ def main():
     
     operation_info = requests.get(url)
     soup = bs4.BeautifulSoup(operation_info.text,'lxml')
+    update_time = soup.findAll("span",{"class":"subText"})[0].string
+    
 
     if soup.findAll("span",{"class":"icnNormalLarge"}):
-       speech = "{}は平常運転中です".format(train_route_name)
+       speech = "{}は平常運転中です。{}".format(train_route_name,update_time)
     else:
         delay_info = soup.findAll("dd",{"class":"trouble"})
-        speech = delay_info[0].p.string
+        speech = "{}。{}".format(delay_info[0].p.string,update_time)
 
     res = make_response(jsonify({'speech':speech,'displayText':speech}))
     res.headers['Contest-Type'] = 'application/json'
