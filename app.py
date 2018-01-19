@@ -11,8 +11,8 @@ import requests
 
 app = Flask(__name__)
 
-@app.route('/webhook',methods=['POST']) 
-def main():
+@app.route("/webhook",methods=['POST']) 
+def webhook():
     req = request.get_json()
     train_route_name = req["result"]["parameters"]["train_route"]
 
@@ -40,4 +40,4 @@ def main():
 if __name__ == '__main__':
     port = int(os.environ.get("PORT",5000))
     
-    app.run(debug=False, port = port, host = '0.0.0.0')
+    app.run()
