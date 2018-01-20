@@ -2,5 +2,5 @@ beautifulsoup4==4.6.0
 Flask==0.12.2
 Flask-Cors==3.0.2
 requests==2.14.2
-
+lxml==3.7.3
 

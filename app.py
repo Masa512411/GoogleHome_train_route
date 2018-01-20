@@ -33,11 +33,11 @@ def webhook():
         speech = "{}。{}".format(delay_info[0].p.string,update_time)
 
     res = make_response(jsonify({'speech':speech,'displayText':speech}))
-    res.headers['Contest-Type'] = 'application/json'
+    res.headers['Content-Type'] = 'application/json'    
     return res
-
+    
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT",5000))
     
-    app.run(debug=False,port = port, host = '0.0.0.0')
+    app.run(debug=False,port=port,host='0.0.0.0')
