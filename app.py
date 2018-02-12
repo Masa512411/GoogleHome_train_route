@@ -1,5 +1,6 @@
 import os
 import json
+import re
 
 from flask import Flask
 from flask import jsonify
@@ -29,9 +30,11 @@ def webhook():
     if soup.findAll("span",{"class":"icnNormalLarge"}):
        speech = "{}は平常運転中です。{}".format(train_route_name,update_time)
     else:
-        delay_info = soup.findAll("dd",{"class":"trouble"})
-        speech = "{}。{}".format(delay_info[0].p.string,update_time)
+        delay_info = soup.findAll("dd",{"class":"trouble"})[0].p.text
+        delay_info = re.sub('（.*）','',delay_info) 
+        speech = "{}。{}".format(delay_info,update_time)
 
+    print(speech)
     res = make_response(jsonify({'speech':speech,'displayText':speech}))
     res.headers['Content-Type'] = 'application/json'    
     return res
